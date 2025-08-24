@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products - Trueverse Oil</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Product Grid */
+    .products {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 in a row */
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .product-card h3 {
+      font-size: 18px;
+      margin: 10px 0 5px;
+    }
+
+    .product-card p {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .product-card .btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .product-card .btn:hover {
+      background: #218838;
+    }
+
+    /* Responsive (for mobiles) */
+    @media (max-width: 900px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 in a row for tablets */
+      }
+    }
+
+    @media (max-width: 600px) {
+      .product-grid {
+        grid-template-columns: 1fr; /* single column for small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">Trueverse Oil</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a class="active" href="product.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html" class="cart-link">Cart 🛒 (<span id="cart-count">0</span>)</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Products -->
+  <section class="products">
+    <h2>Our Products</h2>
+    <div class="product-grid">
+
+      <!-- Coconut Oil -->
+      <div class="product-card">
+        <img src="oil2.jpg" alt="Trueverse Coconut Oil">
+        <h3>Trueverse Coconut Oil (500ml)</h3>
+        <p>₹250</p>
+        <button class="btn" onclick="addToCart('Trueverse Coconut Oil (500ml)', 250, 'oil2.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="oil2.jpg" alt="Trueverse Coconut Oil">
+        <h3>Trueverse Coconut Oil (5L)</h3>
+        <p>₹2200</p>
+        <button class="btn" onclick="addToCart('Trueverse Coconut Oil (5L)', 2200, 'oil2.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="oil2.jpg" alt="Trueverse Coconut Oil">
+        <h3>Trueverse Coconut Oil (10L)</h3>
+        <p>₹4300</p>
+        <button class="btn" onclick="addToCart('Trueverse Coconut Oil (10L)', 4300, 'oil2.jpg')">Add to Cart</button>
+      </div>
+
+      <!-- Sesame Oil -->
+      <div class="product-card">
+        <img src="oil3.jpeg" alt="Trueverse Sesame Oil">
+        <h3>Trueverse Sesame Oil (500ml)</h3>
+        <p>₹280</p>
+        <button class="btn" onclick="addToCart('Trueverse Sesame Oil (500ml)', 280, 'oil3.jpeg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="oil3.jpeg" alt="Trueverse Sesame Oil">
+        <h3>Trueverse Sesame Oil (5L)</h3>
+        <p>₹2500</p>
+        <button class="btn" onclick="addToCart('Trueverse Sesame Oil (5L)', 2500, 'oil3.jpeg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="oil3.jpeg" alt="Trueverse Sesame Oil">
+        <h3>Trueverse Sesame Oil (10L)</h3>
+        <p>₹4800</p>
+        <button class="btn" onclick="addToCart('Trueverse Sesame Oil (10L)', 4800, 'oil3.jpeg')">Add to Cart</button>
+      </div>
+
+      <!-- Groundnut Oil -->
+      <div class="product-card">
+        <img src="oil4.jpg" alt="Trueverse Groundnut Oil">
+        <h3>Trueverse Groundnut Oil (500ml)</h3>
+        <p>₹300</p>
+        <button class="btn" onclick="addToCart('Trueverse Groundnut Oil (500ml)', 300, 'oil4.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="oil4.jpg" alt="Trueverse Groundnut Oil">
+        <h3>Trueverse Groundnut Oil (5L)</h3>
+        <p>₹2700</p>
+        <button class="btn" onclick="addToCart('Trueverse Groundnut Oil (5L)', 2700, 'oil4.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="oil4.jpg" alt="Trueverse Groundnut Oil">
+        <h3>Trueverse Groundnut Oil (10L)</h3>
+        <p>₹5200</p>
+        <button class="btn" onclick="addToCart('Trueverse Groundnut Oil (10L)', 5200, 'oil4.jpg')">Add to Cart</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Trueverse Oil | All Rights Reserved</p>
+  </footer>
+
+  <!-- JS Link -->
+  <script src="cart.js"></script>
+</body>
+</html>

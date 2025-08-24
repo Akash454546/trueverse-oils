@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart - Trueverse Oil</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="cart.js" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="navbar">
+      <h2>Trueverse Oil</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html" class="active">Cart 🛒 (<span id="cart-count">0</span>)</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Cart Section -->
+  <section class="cart-section">
+    <h2>Your Shopping Cart</h2>
+    <div class="cart-container">
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody id="cart-items">
+          <!-- Items will be injected here by JS -->
+        </tbody>
+      </table>
+
+      <div class="cart-summary">
+        <h3>Cart Summary</h3>
+        <p>Subtotal: <span id="subtotal">₹0</span></p>
+        <p>Shipping: <span>Free</span></p>
+        <p><strong>Total: <span id="total">₹0</span></strong></p>
+
+  
+        <button class="whatsapp-btn" onclick="orderInWhatsApp()">Order in WhatsApp</button>
+        <button class="continue-btn" onclick="window.location.href='product.html'">Continue Shopping</button>
+        <button class="back-btn" onclick="window.location.href='index.html'">Back to Home</button>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

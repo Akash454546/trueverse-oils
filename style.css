@@ -1,0 +1,715 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #228B22;
+    color: #fff;
+    padding: 15px 30px;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    background: #f4f4f4;
+}
+
+.hero-text h1 {
+    font-size: 40px;
+    color: #228B22;
+}
+
+.hero-text p {
+    margin: 15px 0;
+    font-size: 18px;
+}
+
+.btn {
+    background: #228B22;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #1e6e1e;
+}
+
+/* Hero Image */
+.hero-image img {
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+/* Featured Products */
+.featured {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.featured h2 {
+    margin-bottom: 30px;
+    font-size: 32px;
+    color: #228B22;
+}
+
+.product-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.product-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product-card h3 {
+    margin: 15px 0 10px;
+}
+
+.product-card p {
+    font-size: 18px;
+    color: #333;
+}
+
+.product-card .btn {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #228B22;
+    color: #ddd;
+}
+/* Contact Section */
+.contact-section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.contact-section h2 {
+    font-size: 32px;
+    color: #228B22;
+    margin-bottom: 10px;
+}
+
+.contact-intro {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+/* Contact Container */
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+/* Contact Form */
+.contact-form {
+    flex: 1;
+    min-width: 300px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.contact-form label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-form .btn {
+    margin-top: 15px;
+    background: #228B22;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contact-form .btn:hover {
+    background: #1e6e1e;
+}
+
+/* Contact Info */
+.contact-info {
+    flex: 1;
+    min-width: 250px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.contact-info h3 {
+    margin-bottom: 10px;
+    color: #228B22;
+}
+
+.contact-info p {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.contact-info i {
+    color: #228B22;
+    margin-right: 10px;
+}
+
+
+
+/* Cart Page */
+.cart-section {
+    width: 90%;
+    margin: 40px auto;
+}
+.cart-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.cart-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.cart-table {
+    width: 65%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.cart-table th, .cart-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+.cart-table th {
+    background: #f4f4f4;
+}
+.cart-img {
+    width: 50px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.quantity {
+    width: 60px;
+    text-align: center;
+    padding: 5px;
+}
+.remove-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.remove-btn:hover {
+    background: #c0392b;
+}
+.cart-summary {
+    width: 30%;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.cart-summary h3 {
+    margin-bottom: 15px;
+}
+.cart-summary p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+.cart-summary {
+    text-align: center;
+}
+
+/* Make buttons inline (row) */
+.cart-summary button {
+    margin: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block; /* put them side by side */
+    min-width: 150px;      /* same width for uniform look */
+}
+
+/* Checkout */
+.checkout-btn {
+    background: #28a745;
+    color: white;
+}
+.checkout-btn:hover {
+    background: #218838;
+}
+
+/* Continue */
+.continue-btn {
+    background: #007bff;
+    color: white;
+}
+.continue-btn:hover {
+    background: #0069d9;
+}
+
+/* Back */
+.back-btn {
+    background: #6c757d;
+    color: white;
+}
+.back-btn:hover {
+    background: #5a6268;
+}
+
+/* WhatsApp */
+.whatsapp-btn {
+  background-color: #25D366; /* WhatsApp green */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;   /* inline for row alignment */
+  min-width: 150px;        /* same width as other buttons */
+  text-align: center;
+}
+
+.whatsapp-btn:hover {
+  background-color: #1ebe5d;
+  transform: scale(1.05);
+}
+
+.whatsapp-btn:active {
+  background-color: #128C7E; /* Darker green */
+  transform: scale(0.97);
+}
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  color: #fff;
+}
+
+.navbar .logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.navbar .nav-links li {
+  margin: 0 15px;
+}
+
+.navbar .nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.navbar .nav-links a:hover,
+.navbar .nav-links a.active {
+  color: #ffd700;
+}
+
+/* Contact Section */
+.contact-section {
+  padding: 50px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #e6f0ff, #f9f9f9);
+}
+
+.contact-section h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #004080;
+}
+
+.contact-section .contact-intro {
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  font-size: 18px;
+  color: #555;
+}
+
+/* Contact Info */
+.contact-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.contact-info {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: left;
+  width: 350px;
+}
+
+.contact-info h3 {
+  font-size: 25px;
+  margin-bottom: 10px;
+  color: #004080;
+}
+
+.contact-info p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.contact-info a {
+  text-decoration: none;
+  color: #004080;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.contact-info a:hover {
+  color: #009933;
+}
+
+/* Special Buttons for WhatsApp & Email */
+.contact-info a[href*="wa.me"] {
+  display: inline-block;
+  margin-top: 5px;
+  background: #25D366;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+
+.contact-info a[href*="mailto"] {
+  display: inline-block;
+  margin-top: 5px;
+  background: #0072c6;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+
+/* Extra Section */
+.extra-section {
+  padding: 60px 20px;
+  background: #fff;
+  text-align: center;
+}
+
+.extra-section h2 {
+  font-size: 26px;
+  color: #004080;
+  margin-bottom: 20px;
+}
+
+.extra-section p {
+  font-size: 18px;
+  color: #444;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* Footer */
+footer {
+  background: #004080;
+  color: #fff;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+/* Video Section */
+.video-section {
+    text-align: center;
+    padding: 50px 20px;
+    background: #f9f9f9;  /* light background */
+}
+
+.video-section h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.video-section p {
+    max-width: 700px;
+    margin: 0 auto 20px auto;
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.video-section video {
+    display: block;
+    margin: 0 auto;       /* centers the video */
+    border-radius: 12px;  /* rounded corners */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+/* Why Us Section */
+.why-us {
+    padding: 80px 20px;   /* space above & below */
+    text-align: center;
+    background: #fff;     /* optional background */
+}
+
+.why-us h2 {
+    font-size: 32px;
+    color: #228B22;
+    margin-bottom: 40px;  /* space below heading */
+}
+
+/* Benefits Container */
+.benefits {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;  /* makes responsive */
+}
+
+/* Individual Card */
+.benefit-card {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 280px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.benefit-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.benefit-card p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Hover Effect */
+.benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+/* Testimonials Section */
+.testimonials {
+    padding: 80px 20px;       /* space above & below */
+    text-align: center;
+    background: #f4f4f4;      /* light background for contrast */
+}
+
+.testimonials h2 {
+    font-size: 32px;
+    color: #228B22;
+    margin-bottom: 30px;      /* space below heading */
+}
+
+.testimonials blockquote {
+    font-size: 18px;
+    font-style: italic;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;           /* centers the text */
+    line-height: 1.8;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+/* About Section */
+.about {
+    padding: 40px 20px;           /* spacing top & bottom */
+    max-width: 900px;             /* keeps text from stretching too wide */
+    margin: 0 auto;               /* centers section */
+    text-align: center;           /* center-align headings */
+    background: #fff;             /* clean background */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* subtle card effect */
+}
+
+.about h2 {
+    font-size: 36px;
+    color: #228B22;
+    margin-bottom: 25px;
+}
+
+.about p {
+    font-size: 18px;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    text-align: justify;          /* cleaner long text */
+}
+
+.about h3 {
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* List Styling */
+.about ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 30px auto;
+    max-width: 700px;
+    text-align: left;             /* left-align list for readability */
+}
+
+.about ul li {
+    background: #f9f9f9;
+    margin: 10px 0;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 17px;
+    color: #555;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Highlight Strong Words */
+.about strong {
+    color: #228B22;
+}
+
+/* Emphasis */
+.about em {
+    color: #e67e22;
+    font-style: normal;
+    font-weight: bold;
+}
+/* WhatsApp Button */
+/* Contact Info Styling */
+.contact-info a {
+    font-size: 1.1rem;     /* Bigger text */
+    color: #0a66c2;        /* Nice blue for links */
+    text-decoration: none; /* Removes underline */
+    display: inline-block;
+    margin-bottom: 8px;    /* Space between items */
+}
+
+.contact-info a:hover {
+    color: #0056b3;        /* Darker blue on hover */
+}
+
+.contact-info p {
+    font-size: 1.1rem;  /* Match link size */
+    margin: 10px 0;
+}
+
