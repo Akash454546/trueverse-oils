@@ -6,20 +6,156 @@
   <title>Your Cart - Trueverse Oil</title>
   <link rel="stylesheet" href="style.css">
   <script src="cart.js" defer></script>
+
+  <style>
+    /* Navbar */
+    .navbar {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 20px;
+      background:#228b22;
+      position:relative;
+      z-index:1200;
+    }
+    .navbar .logo {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#fff;
+      font-weight:800;
+      font-size:20px;
+    }
+    .navbar .logo img {
+      height:44px;
+      width:auto;
+      display:block;
+    }
+    .navbar .nav-links {
+      display:flex;
+      gap:20px;
+      list-style:none;
+      align-items:center;
+    }
+    .navbar .nav-links a {
+      color:#fff;
+      font-weight:700;
+      text-decoration:none;
+      padding:6px 8px;
+      border-radius:6px;
+    }
+    .navbar .nav-links a.active { color:#ffd700; }
+
+    /* Hamburger */
+    .menu-toggle {
+      display:none;
+      flex-direction:column;
+      justify-content:space-between;
+      width:26px;
+      height:20px;
+      background:transparent;
+      border:0;
+      cursor:pointer;
+    }
+    .menu-toggle span {
+      display:block;
+      width:100%;
+      height:3px;
+      background:#fff;
+      border-radius:2px;
+    }
+
+    @media (max-width:768px){
+      .navbar .nav-links {
+        display:none;
+        flex-direction:column;
+        position:absolute;
+        right:12px;
+        top:62px;
+        background:#1f7a1f;
+        padding:12px;
+        border-radius:10px;
+        min-width:160px;
+        box-shadow:0 12px 30px rgba(0,0,0,0.2);
+        text-align:right;
+      }
+      .navbar .nav-links.show { display:flex !important; }
+      .menu-toggle { display:flex; }
+    }
+
+    /* Cart */
+    .cart-section {
+      max-width:1000px;
+      margin:40px auto;
+      padding:0 20px;
+    }
+    .cart-section h2 {
+      text-align:center;
+      margin-bottom:20px;
+      color:#228b22;
+    }
+    .cart-table {
+      width:100%;
+      border-collapse:collapse;
+      margin-bottom:20px;
+    }
+    .cart-table th, .cart-table td {
+      padding:12px;
+      border:1px solid #ddd;
+      text-align:center;
+    }
+    .cart-summary {
+      text-align:right;
+      border-top:2px solid #228b22;
+      padding-top:15px;
+    }
+    .cart-summary h3 { color:#1f5d1f; margin-bottom:10px; }
+    .cart-summary p { margin:5px 0; }
+    .cart-summary button {
+      padding:10px 18px;
+      margin:6px;
+      border:none;
+      border-radius:6px;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .whatsapp-btn { background:#25d366; color:#fff; }
+    .continue-btn { background:#f0ad4e; color:#fff; }
+    .back-btn { background:#228b22; color:#fff; }
+
+    /* Footer */
+    footer {
+      background:#228b22;
+      color:#fff;
+      text-align:center;
+      padding:15px;
+      margin-top:30px;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
   <header>
-    <div class="navbar">
-      <h2>Trueverse Oil</h2>
-      <ul class="nav-links">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="logo">
+        <img src="Truevers Logo .svg" alt="Trueverse Oils Logo">
+        <span>Trueverse Oil</span>
+      </div>
+
+      <ul class="nav-links" id="navMenu">
         <li><a href="index.html">Home</a></li>
         <li><a href="product.html">Products</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="cart.html" class="active">Cart 🛒 (<span id="cart-count">0</span>)</a></li>
       </ul>
-    </div>
+
+      <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
   </header>
 
   <!-- Cart Section -->
@@ -37,7 +173,7 @@
           </tr>
         </thead>
         <tbody id="cart-items">
-          <!-- Items will be injected here by JS -->
+          <!-- Items injected by JS -->
         </tbody>
       </table>
 
@@ -47,12 +183,37 @@
         <p>Shipping: <span>Free</span></p>
         <p><strong>Total: <span id="total">₹0</span></strong></p>
 
-  
         <button class="whatsapp-btn" onclick="orderInWhatsApp()">Order in WhatsApp</button>
         <button class="continue-btn" onclick="window.location.href='product.html'">Continue Shopping</button>
         <button class="back-btn" onclick="window.location.href='index.html'">Back to Home</button>
       </div>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Trueverse Oil | All Rights Reserved</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuBtn = document.getElementById('menuBtn');
+      const navMenu = document.getElementById('navMenu');
+
+      if (!menuBtn || !navMenu) return;
+
+      menuBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        navMenu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', function(e){
+        if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)){
+          navMenu.classList.remove('show');
+        }
+      });
+    });
+  </script>
 </body>
 </html>

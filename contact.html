@@ -1,85 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Trueverse Oil</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Trueverse Oil</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Navbar */
+    .navbar {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 20px;
+      background:#228b22;
+      position:relative;
+      z-index:1200;
+    }
+    .navbar .logo {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#fff;
+      font-weight:800;
+      font-size:20px;
+    }
+    .navbar .logo img {
+      height:44px;
+      width:auto;
+      display:block;
+    }
+    .navbar .nav-links {
+      display:flex;
+      gap:20px;
+      list-style:none;
+      align-items:center;
+    }
+    .navbar .nav-links a {
+      color:#fff;
+      font-weight:700;
+      text-decoration:none;
+      padding:6px 8px;
+      border-radius:6px;
+    }
+    .navbar .nav-links a.active { color:#ffd700; }
+
+    /* Hamburger */
+    .menu-toggle {
+      display:none;
+      flex-direction:column;
+      justify-content:space-between;
+      width:26px;
+      height:20px;
+      background:transparent;
+      border:0;
+      cursor:pointer;
+    }
+    .menu-toggle span {
+      display:block;
+      width:100%;
+      height:3px;
+      background:#fff;
+      border-radius:2px;
+    }
+
+    @media (max-width:768px){
+      .navbar .nav-links {
+        display:none;
+        flex-direction:column;
+        position:absolute;
+        right:12px;
+        top:62px;
+        background:#1f7a1f;
+        padding:12px;
+        border-radius:10px;
+        min-width:160px;
+        box-shadow:0 12px 30px rgba(0,0,0,0.2);
+        text-align:right;
+      }
+      .navbar .nav-links.show { display:flex !important; }
+      .menu-toggle { display:flex; }
+    }
+
+    /* Contact Page */
+    .contact-section {
+      max-width:900px;
+      margin:40px auto;
+      padding:0 20px;
+      line-height:1.7;
+    }
+    .contact-section h2 {
+      text-align:center;
+      margin-bottom:15px;
+      color:#228b22;
+    }
+    .contact-intro {
+      text-align:center;
+      margin-bottom:25px;
+      font-size:16px;
+    }
+    .contact-container {
+      display:flex;
+      justify-content:center;
+      text-align:left;
+    }
+    .contact-info h3 {
+      margin-top:20px;
+      font-size:20px;
+    
+    }
+    .contact-info p a {
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    .extra-section {
+      max-width:800px;
+      margin:40px auto;
+      padding:20px;
+      background:#f8fff8;
+      border-left:6px solid #228b22;
+      border-radius:10px;
+      text-align:center;
+    }
+    .extra-section h2 {
+      margin-bottom:15px;
+      color:#228b22;
+    }
+
+
+    /* Footer */
+    footer {
+      background:#228b22;
+      color:#fff;
+      text-align:center;
+      padding:15px;
+      margin-top:30px;
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="navbar">
-            <div class="logo">Trueverse Oil</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="product.html">Products</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html" class="active">Contact</a></li>
-                <li><a href="cart.html" class="cart-link">Cart 🛒</a></li>
-            </ul>
-        </nav>
-    </header>
+  <!-- Header -->
+  <header>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="logo">
+        <img src="Truevers Logo .svg" alt="Trueverse Oils Logo">
+        <span>Trueverse Oil</span>
+      </div>
 
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <h2>Contact Us</h2>
-        <p class="contact-intro">
-            Don’t feel shy to contact us 😊 <br>
-            If you have any queries, doubts, or just want to know more about our products, 
-            please reach out to us. We are always available to help you anytime. 
-            Your satisfaction is our priority!
-        </p>
+      <ul class="nav-links" id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="cart.html" class="cart-link">Cart 🛒 (<span id="cart-count">0</span>)</a></li>
+      </ul>
 
-        <div class="contact-container">
-            <!-- Contact Info -->
-            <div class="contact-info">
-                <h3>Our Address</h3>
-                <p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=3%2F62+Mariappan+Koil+Street+Sukkampatti+Salem+Tamil+Nadu+636122" 
-                       target="_blank">
-                        <i class="fas fa-map-marker-alt"></i> 3/62, Mariappan Koil Street, Sukkampatti, Salem, Tamil Nadu, Pin - 636122
-                    </a>
-                </p>
+      <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
 
-                <h3>Call / WhatsApp</h3>
-                <p>
-                    <a href="https://wa.me/919092418710" target="_blank">
-                        <i class="fab fa-whatsapp"></i> ‪+91 90924 18710‬
-                    </a>
-                    <br>
-                    <a href="tel:‪+919092418710‬">
-                        <i class="fas fa-phone"></i> Click to Call
-                    </a>
-                </p>
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <h2>Contact Us</h2>
+    <p class="contact-intro">
+      Don’t feel shy to contact us 😊 <br>
+      If you have any queries, doubts, or just want to know more about our products, 
+      please reach out to us. We are always available to help you anytime. 
+      Your satisfaction is our priority!
+    </p>
 
-                <h3>Email</h3>
-                <p>
-                    <a href="mailto:support@trueverseoil.com">
-                        <i class="fas fa-envelope"></i> support@trueverseoil.com
-                    </a>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Extra Section for Better Page Size -->
-    <section class="extra-section">
-        <h2>We’re Here for You!</h2>
+    <div class="contact-container">
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <h3>Our Address</h3>
         <p>
-            Whether you are a new customer exploring our oils, or an existing customer with questions, 
-            we are always happy to assist you. <br><br>
-            ✅ Quick Replies on WhatsApp <br>
-            ✅ 24/7 Email Support <br>
-            ✅ Friendly Phone Assistance <br><br>
-            Your trust means everything to us ❤
+          <a href="https://www.google.com/maps/search/?api=1&query=3%2F62+Mariappan+Koil+Street+Sukkampatti+Salem+Tamil+Nadu+636122" target="_blank">
+            <i class="fas fa-map-marker-alt"></i> 3/62, Mariappan Koil Street, Sukkampatti, Salem, Tamil Nadu, Pin - 636122
+          </a>
         </p>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Trueverse Oil. All Rights Reserved.</p>
-    </footer>
+        <h3>Call / WhatsApp</h3>
+        <p>
+          <a href="https://wa.me/919092418710" target="_blank">
+            <i class="fab fa-whatsapp"></i> ‪+91 90924 18710‬
+          </a>
+          <br>
+          <a href="tel:+919092418710">
+            <i class="fas fa-phone"></i> Click to Call
+          </a>
+        </p>
+
+        <h3>Email</h3>
+        <p>
+          <a href="mailto:support@trueverseoil.com">
+            <i class="fas fa-envelope"></i> support@trueverseoil.com
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Extra Section -->
+  <section class="extra-section">
+    <h2>We’re Here for You!</h2>
+    <p>
+      Whether you are a new customer exploring our oils, or an existing customer with questions, 
+      we are always happy to assist you. <br><br>
+      ✅ Quick Replies on WhatsApp <br>
+      ✅ 24/7 Email Support <br>
+      ✅ Friendly Phone Assistance <br><br>
+      Your trust means everything to us ❤
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Trueverse Oil | All Rights Reserved</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuBtn = document.getElementById('menuBtn');
+      const navMenu = document.getElementById('navMenu');
+
+      if (!menuBtn || !navMenu) return;
+
+      menuBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        navMenu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', function(e){
+        if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)){
+          navMenu.classList.remove('show');
+        }
+      });
+    });
+  </script>
 </body>
 </html>

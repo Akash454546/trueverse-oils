@@ -4,168 +4,258 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Products - Trueverse Oil</title>
+
   <link rel="stylesheet" href="style.css">
+
   <style>
-    /* Product Grid */
-    .products {
-      padding: 40px;
-      text-align: center;
+    /* Navbar */
+    .navbar {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 20px;
+      background:#228b22;
+      position:relative;
+      z-index:1200;
+    }
+    .navbar .logo {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#fff;
+      font-weight:800;
+      font-size:20px;
+    }
+    .navbar .logo img {
+      height:44px;
+      width:auto;
+      display:block;
+    }
+    .navbar .nav-links {
+      display:flex;
+      gap:20px;
+      list-style:none;
+      align-items:center;
+    }
+    .navbar .nav-links a {
+      color:#fff;
+      font-weight:700;
+      text-decoration:none;
+      padding:6px 8px;
+      border-radius:6px;
+    }
+    .navbar .nav-links a.active { color:#ffd700; }
+
+    /* Hamburger button */
+    .menu-toggle {
+      display:none;
+      flex-direction:column;
+      justify-content:space-between;
+      width:26px;
+      height:20px;
+      background:transparent;
+      border:0;
+      cursor:pointer;
+    }
+    .menu-toggle span {
+      display:block;
+      width:100%;
+      height:3px;
+      background:#fff;
+      border-radius:2px;
     }
 
+    @media (max-width: 768px) {
+      .navbar .nav-links {
+        display:none;
+        flex-direction:column;
+        position:absolute;
+        right:12px;
+        top:62px;
+        background:#1f7a1f;
+        padding:12px;
+        border-radius:10px;
+        min-width:160px;
+        box-shadow:0 12px 30px rgba(0,0,0,0.2);
+        text-align:right;
+      }
+      .navbar .nav-links.show { display:flex !important; }
+      .menu-toggle { display:flex; }
+    }
+
+    /* Products */
+    .products { padding:40px; text-align:center; }
     .product-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 3 in a row */
-      gap: 20px;
-      margin-top: 20px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+      margin-top:20px;
     }
-
     .product-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
+      background:#fff;
+      border-radius:12px;
+      padding:15px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+      transition:transform .2s;
+      text-align:left;
     }
-
-    .product-card:hover {
-      transform: translateY(-5px);
-    }
-
+    .product-card:hover { transform:translateY(-5px); }
     .product-card img {
-      max-width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      border-radius:8px;
     }
-
-    .product-card h3 {
-      font-size: 18px;
-      margin: 10px 0 5px;
-    }
-
-    .product-card p {
-      font-size: 16px;
-      color: #333;
-      margin-bottom: 10px;
-    }
-
+    .product-card h3 { font-size:18px; margin:10px 0 5px; }
+    .product-card p { font-size:16px; color:#333; margin-bottom:10px; }
     .product-card .btn {
-      background: #28a745;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
+      background:#28a745;
+      color:#fff;
+      padding:8px 15px;
+      border-radius:6px;
+      border:0;
+      cursor:pointer;
+    }
+    .product-card .btn:hover { background:#218838; }
+
+    @media (max-width:900px){
+      .product-grid{ grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:600px){
+      .product-grid{ grid-template-columns:1fr; }
     }
 
-    .product-card .btn:hover {
-      background: #218838;
-    }
-
-    /* Responsive (for mobiles) */
-    @media (max-width: 900px) {
-      .product-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 in a row for tablets */
-      }
-    }
-
-    @media (max-width: 600px) {
-      .product-grid {
-        grid-template-columns: 1fr; /* single column for small screens */
-      }
+    /* Footer */
+    footer {
+      background:#228b22;
+      color:#fff;
+      text-align:center;
+      padding:15px;
+      margin-top:30px;
     }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header>
-    <nav class="navbar">
-      <div class="logo">Trueverse Oil</div>
-      <ul class="nav-links">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="logo">
+        <img src="Truevers Logo .svg" alt="Trueverse Oils Logo">
+        <span>Trueverse Oil</span>
+      </div>
+
+      <ul class="nav-links" id="navMenu">
         <li><a href="index.html">Home</a></li>
         <li><a class="active" href="product.html">Products</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="cart.html" class="cart-link">Cart 🛒 (<span id="cart-count">0</span>)</a></li>
       </ul>
+
+      <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
   </header>
 
   <!-- Products -->
-  <section class="products">
-    <h2>Our Products</h2>
-    <div class="product-grid">
+  <main>
+    <section class="products">
+      <div class="container">
+        <h2 class="text-center">Our Products</h2>
+        <div class="product-grid">
+          
+          <!-- Coconut Oil -->
+          <div class="product-card">
+            <img src="oil2.jpg" alt="Trueverse Coconut Oil">
+            <h3>Trueverse Coconut Oil (500ml)</h3>
+            <p>₹250</p>
+            <button class="btn" onclick="addToCart('Trueverse Coconut Oil (500ml)', 250, 'oil2.jpg')">Add to Cart</button>
+          </div>
+          <div class="product-card">
+            <img src="oil2.jpg" alt="Trueverse Coconut Oil">
+            <h3>Trueverse Coconut Oil (5L)</h3>
+            <p>₹2200</p>
+            <button class="btn" onclick="addToCart('Trueverse Coconut Oil (5L)', 2200, 'oil2.jpg')">Add to Cart</button>
+          </div>
+          <div class="product-card">
+            <img src="oil2.jpg" alt="Trueverse Coconut Oil">
+            <h3>Trueverse Coconut Oil (10L)</h3>
+            <p>₹4300</p>
+            <button class="btn" onclick="addToCart('Trueverse Coconut Oil (10L)', 4300, 'oil2.jpg')">Add to Cart</button>
+          </div>
 
-      <!-- Coconut Oil -->
-      <div class="product-card">
-        <img src="oil2.jpg" alt="Trueverse Coconut Oil">
-        <h3>Trueverse Coconut Oil (500ml)</h3>
-        <p>₹250</p>
-        <button class="btn" onclick="addToCart('Trueverse Coconut Oil (500ml)', 250, 'oil2.jpg')">Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="oil2.jpg" alt="Trueverse Coconut Oil">
-        <h3>Trueverse Coconut Oil (5L)</h3>
-        <p>₹2200</p>
-        <button class="btn" onclick="addToCart('Trueverse Coconut Oil (5L)', 2200, 'oil2.jpg')">Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="oil2.jpg" alt="Trueverse Coconut Oil">
-        <h3>Trueverse Coconut Oil (10L)</h3>
-        <p>₹4300</p>
-        <button class="btn" onclick="addToCart('Trueverse Coconut Oil (10L)', 4300, 'oil2.jpg')">Add to Cart</button>
-      </div>
+          <!-- Sesame Oil -->
+          <div class="product-card">
+            <img src="oil3.jpeg" alt="Trueverse Sesame Oil">
+            <h3>Trueverse Sesame Oil (500ml)</h3>
+            <p>₹280</p>
+            <button class="btn" onclick="addToCart('Trueverse Sesame Oil (500ml)', 280, 'oil3.jpeg')">Add to Cart</button>
+          </div>
+          <div class="product-card">
+            <img src="oil3.jpeg" alt="Trueverse Sesame Oil">
+            <h3>Trueverse Sesame Oil (5L)</h3>
+            <p>₹2500</p>
+            <button class="btn" onclick="addToCart('Trueverse Sesame Oil (5L)', 2500, 'oil3.jpeg')">Add to Cart</button>
+          </div>
+          <div class="product-card">
+            <img src="oil3.jpeg" alt="Trueverse Sesame Oil">
+            <h3>Trueverse Sesame Oil (10L)</h3>
+            <p>₹4800</p>
+            <button class="btn" onclick="addToCart('Trueverse Sesame Oil (10L)', 4800, 'oil3.jpeg')">Add to Cart</button>
+          </div>
 
-      <!-- Sesame Oil -->
-      <div class="product-card">
-        <img src="oil3.jpeg" alt="Trueverse Sesame Oil">
-        <h3>Trueverse Sesame Oil (500ml)</h3>
-        <p>₹280</p>
-        <button class="btn" onclick="addToCart('Trueverse Sesame Oil (500ml)', 280, 'oil3.jpeg')">Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="oil3.jpeg" alt="Trueverse Sesame Oil">
-        <h3>Trueverse Sesame Oil (5L)</h3>
-        <p>₹2500</p>
-        <button class="btn" onclick="addToCart('Trueverse Sesame Oil (5L)', 2500, 'oil3.jpeg')">Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="oil3.jpeg" alt="Trueverse Sesame Oil">
-        <h3>Trueverse Sesame Oil (10L)</h3>
-        <p>₹4800</p>
-        <button class="btn" onclick="addToCart('Trueverse Sesame Oil (10L)', 4800, 'oil3.jpeg')">Add to Cart</button>
-      </div>
+          <!-- Groundnut Oil -->
+          <div class="product-card">
+            <img src="oil4.jpg" alt="Trueverse Groundnut Oil">
+            <h3>Trueverse Groundnut Oil (500ml)</h3>
+            <p>₹300</p>
+            <button class="btn" onclick="addToCart('Trueverse Groundnut Oil (500ml)', 300, 'oil4.jpg')">Add to Cart</button>
+          </div>
+          <div class="product-card">
+            <img src="oil4.jpg" alt="Trueverse Groundnut Oil">
+            <h3>Trueverse Groundnut Oil (5L)</h3>
+            <p>₹2700</p>
+            <button class="btn" onclick="addToCart('Trueverse Groundnut Oil (5L)', 2700, 'oil4.jpg')">Add to Cart</button>
+          </div>
+          <div class="product-card">
+            <img src="oil4.jpg" alt="Trueverse Groundnut Oil">
+            <h3>Trueverse Groundnut Oil (10L)</h3>
+            <p>₹5200</p>
+            <button class="btn" onclick="addToCart('Trueverse Groundnut Oil (10L)', 5200, 'oil4.jpg')">Add to Cart</button>
+          </div>
 
-      <!-- Groundnut Oil -->
-      <div class="product-card">
-        <img src="oil4.jpg" alt="Trueverse Groundnut Oil">
-        <h3>Trueverse Groundnut Oil (500ml)</h3>
-        <p>₹300</p>
-        <button class="btn" onclick="addToCart('Trueverse Groundnut Oil (500ml)', 300, 'oil4.jpg')">Add to Cart</button>
+        </div>
       </div>
-      <div class="product-card">
-        <img src="oil4.jpg" alt="Trueverse Groundnut Oil">
-        <h3>Trueverse Groundnut Oil (5L)</h3>
-        <p>₹2700</p>
-        <button class="btn" onclick="addToCart('Trueverse Groundnut Oil (5L)', 2700, 'oil4.jpg')">Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="oil4.jpg" alt="Trueverse Groundnut Oil">
-        <h3>Trueverse Groundnut Oil (10L)</h3>
-        <p>₹5200</p>
-        <button class="btn" onclick="addToCart('Trueverse Groundnut Oil (10L)', 5200, 'oil4.jpg')">Add to Cart</button>
-      </div>
-
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- Footer -->
   <footer>
     <p>© 2025 Trueverse Oil | All Rights Reserved</p>
   </footer>
 
-  <!-- JS Link -->
   <script src="cart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuBtn = document.getElementById('menuBtn');
+      const navMenu = document.getElementById('navMenu');
+
+      if (!menuBtn || !navMenu) return;
+
+      menuBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        navMenu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', function(e){
+        if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)){
+          navMenu.classList.remove('show');
+        }
+      });
+    });
+  </script>
 </body>
 </html>

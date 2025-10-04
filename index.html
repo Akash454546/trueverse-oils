@@ -382,14 +382,30 @@
     <p>© 2025 Trueverse Oils | All Rights Reserved</p>
   </footer>
 
-  <script>
-    // Mobile menu toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+ <script>
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
 
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('show');
+  // Toggle menu on hamburger click
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent body click from firing
+    navLinks.classList.toggle('show');
+  });
+
+  // Close when clicking a link
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('show');
     });
-  </script>
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+      navLinks.classList.remove('show');
+    }
+  });
+</script>
+
 </body>
 </html>
