@@ -1,11 +1,11 @@
 /* ===========================
-   cart.js — Trueverse Oil
+   cart.js — Trueverse Oil (Corrected Final)
    =========================== */
 
 /* ---- CONFIG ---- */
 var STORAGE_KEY = "cart";
 var STORE_NAME = "Trueverse Oil";
-var WHATSAPP_PHONE = "919092418710"; // <-- CHANGE THIS to your WhatsApp number
+var WHATSAPP_PHONE = "919092418710"; // <-- Your WhatsApp number
 
 /* ---- HELPERS ---- */
 function getCart() {
@@ -13,6 +13,7 @@ function getCart() {
   try {
     return raw ? JSON.parse(raw) : [];
   } catch (e) {
+    console.error("Error parsing cart:", e);
     return [];
   }
 }
@@ -27,37 +28,25 @@ function formatINR(amount) {
 }
 
 /* ===========================
-   CART FUNCTIONS
+   CART DISPLAY & MANAGEMENT FUNCTIONS
    =========================== */
 
-function addToCart(name, price, image) {
+// Global function to update the cart count in the navbar
+function updateCartCount() {
   var cart = getCart();
-  var idx = -1;
-
-  for (var i = 0; i < cart.length; i++) {
-    if (cart[i].name === name) {
-      idx = i;
-      break;
-    }
-  }
-
-  if (idx !== -1) {
-    cart[idx].quantity = (Number(cart[idx].quantity) || 0) + 1;
-  } else {
-    cart.push({
-      name: String(name),
-      price: Number(price) || 0,
-      image: String(image || ""),
-      quantity: 1
-    });
-  }
-
-  setCart(cart);
-  updateCartCount();
-  alert(name + " added to cart!");
-  window.location.href = "cart.html";
+  var count = cart.reduce(function(total, item) {
+    return total + (Number(item.quantity) || 0);
+  }, 0);
+  
+  var el = document.getElementById("cart-count");
+  // Also update the count on the mobile menu (cart-count-2) if on cart.html
+  var el2 = document.getElementById("cart-count-2"); 
+  
+  if (el) el.textContent = String(count);
+  if (el2) el2.textContent = String(count);
 }
 
+// Global function to render the cart (Called from window.onload and after updates)
 function loadCart() {
   var cart = getCart();
   var cartItemsEl = document.getElementById("cart-items");
@@ -72,25 +61,35 @@ function loadCart() {
   cartItemsEl.innerHTML = "";
   var subtotal = 0;
 
+  if (cart.length === 0) {
+      cartItemsEl.innerHTML = 
+          '<tr><td colspan="5" style="text-align:center; padding: 20px;">Your cart is empty.</td></tr>';
+  }
+
   for (var i = 0; i < cart.length; i++) {
     var item = cart[i];
     var price = Number(item.price) || 0;
-    var qty = Number(item.quantity) || 0;
+    // FIX: Read quantity from item.quantity, which is now correctly set to 1 in product.html
+    var qty = Number(item.quantity) || 1; // Default to 1 instead of 0 for safety
     var lineTotal = price * qty;
     subtotal += lineTotal;
 
     var rowHtml =
       '<tr>' +
       '  <td>' +
-      '    <img src="' + (item.image || "") + '" class="cart-img" alt="' + item.name + '" width="50">' +
-      '    <span>' + item.name + '</span>' +
+      '    <div style="display:flex; align-items:center; gap:10px;">' +
+      '      <img src="' + (item.image || "") + '" alt="' + item.name + '" style="height:50px; width:50px; object-fit:cover; border-radius:4px;">' +
+      '      <span>' + item.name + '</span>' +
+      '    </div>' +
       '  </td>' +
       '  <td>' + formatINR(price) + '</td>' +
       '  <td>' +
-      '    <input type="number" min="1" value="' + qty + '" onchange="updateQuantity(' + i + ', this.value)" style="width:70px">' +
+      // Call global updateQuantity
+      '    <input type="number" min="1" value="' + qty + '" onchange="updateQuantity(' + i + ', this.value)" style="width:70px; padding:5px; text-align:center; border:1px solid #ccc; border-radius:4px;">' +
       '  </td>' +
       '  <td class="item-total">' + formatINR(lineTotal) + '</td>' +
-      '  <td><button onclick="removeItem(' + i + ')" class="remove-btn">X</button></td>' +
+      // Call global removeItem
+      '  <td><button onclick="removeItem(' + i + ')" class="remove-btn" style="background:#dc3545; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer;">X</button></td>' +
       '</tr>';
 
     cartItemsEl.insertAdjacentHTML("beforeend", rowHtml);
@@ -101,44 +100,26 @@ function loadCart() {
   updateCartCount();
 }
 
+// Global function for quantity change
 function updateQuantity(index, quantity) {
   var cart = getCart();
   if (!cart[index]) return;
   var q = parseInt(quantity, 10);
-  if (!q || q < 1) q = 1;
+  if (isNaN(q) || q < 1) q = 1; // Ensure minimum quantity is 1
   cart[index].quantity = q;
   setCart(cart);
-  loadCart();
+  loadCart(); // Reload the cart to update totals
 }
 
+// Global function for item removal
 function removeItem(index) {
   var cart = getCart();
   if (index < 0 || index >= cart.length) return;
   cart.splice(index, 1);
   setCart(cart);
-  loadCart();
+  loadCart(); // Reload the cart to update display
 }
 
-function checkout() {
-  var cart = getCart();
-  if (!cart.length) {
-    alert("Your cart is empty!");
-    return;
-  }
-  alert("Thank you for your order!");
-  localStorage.removeItem(STORAGE_KEY);
-  window.location.href = "index.html";
-}
-
-function updateCartCount() {
-  var cart = getCart();
-  var count = 0;
-  for (var i = 0; i < cart.length; i++) {
-    count += Number(cart[i].quantity) || 0;
-  }
-  var el = document.getElementById("cart-count");
-  if (el) el.textContent = String(count);
-}
 
 /* ===========================
    WHATSAPP ORDER
@@ -155,7 +136,7 @@ function buildOrderMessage() {
     var qty = Number(it.quantity) || 0;
     var line = price * qty;
     subtotal += line;
-    lines.push((i + 1) + ". " + it.name + " — " + formatINR(price) + " × " + qty + " = " + formatINR(line));
+    lines.push((i + 1) + ". " + it.name + " — " + formatINR(price) + " x " + qty + " = " + formatINR(line));
   }
 
   var msg = "🛒 New Order - " + STORE_NAME + "\n\n";
@@ -167,6 +148,7 @@ function buildOrderMessage() {
   return msg;
 }
 
+// Global function for WhatsApp order
 function orderInWhatsApp() {
   var cart = getCart();
   if (!cart.length) {
@@ -182,21 +164,12 @@ function orderInWhatsApp() {
    INIT
    =========================== */
 
-window.onload = function () {
-  loadCart();
-  updateCartCount();
+// Use DOMContentLoaded instead of window.onload for better performance
+document.addEventListener('DOMContentLoaded', loadCart); 
 
-  var checkoutBtn = document.querySelector(".checkout-btn");
-  if (checkoutBtn) checkoutBtn.addEventListener("click", checkout);
-
-  var whatsappBtn = document.querySelector(".whatsapp-btn");
-  if (whatsappBtn) whatsappBtn.addEventListener("click", orderInWhatsApp);
-};
-
-/* Expose for inline handlers */
-window.addToCart = addToCart;
-window.loadCart = loadCart;
-window.updateQuantity = updateQuantity;
-window.removeItem = removeItem;
-window.checkout = checkout;
-window.orderInWhatsApp = orderInWhatsApp;
+// Listen for storage changes from other tabs/windows
+window.addEventListener('storage', function (e) {
+    if (e.key === STORAGE_KEY) {
+        loadCart();
+    }
+});

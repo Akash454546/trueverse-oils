@@ -7,13 +7,35 @@
   <link rel="stylesheet" href="style.css"/>
 
   <style>
-    /* Navbar */
+    /* ---------------------------------
+       VARIABLES
+       --------------------------------- */
+    :root{
+      --brand:#228b22; /* Primary header green */
+      --professional-menu-bg: #141922; /* Professional Dark Navy for Menu */
+    }
+
+    /* ---------------------------------
+       BASE STYLES
+       --------------------------------- */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ---------------------------------
+       NAVBAR (Retained original green background)
+       --------------------------------- */
     .navbar {
       display:flex;
       align-items:center;
       justify-content:space-between;
       padding:12px 20px;
-      background:#228b22;
+      background:var(--brand);
       position:relative;
       z-index:1200;
     }
@@ -44,42 +66,115 @@
       border-radius:6px;
     }
     .navbar .nav-links a.active { color:#ffd700; }
+    
+    /* Cart Count in Navbar */
+    .cart-count { 
+      display: inline-block; 
+      background: #ffd700; 
+      color: var(--brand); 
+      border-radius: 50%; 
+      font-size: 12px; 
+      width: 18px; 
+      height: 18px; 
+      line-height: 18px; 
+      text-align: center; 
+      margin-left: 5px;
+      font-weight: 800;
+    }
 
-    /* Hamburger */
-    .menu-toggle {
-      display:none;
-      flex-direction:column;
-      justify-content:space-between;
-      width:26px;
-      height:20px;
+    /* ---------------------------------
+       PROFESSIONAL MOBILE MENU STYLES
+       --------------------------------- */
+    .menu-toggle{
+      display:none; 
       background:transparent;
       border:0;
       cursor:pointer;
-    }
-    .menu-toggle span {
-      display:block;
-      width:100%;
-      height:3px;
-      background:#fff;
-      border-radius:2px;
+      padding:8px;
+      border-radius:8px;
+      z-index: 1700;
+      font-size: 24px;
+      font-weight: 900;
+      color: #fff;
     }
 
+    /* Hamburger Icon */
+    .menu-toggle .menu-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 20px;
+        width: 26px;
+        transition: transform 0.2s ease-in-out;
+    }
+    .menu-toggle .menu-icon .bar {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background: #fff;
+        border-radius: 2px;
+        transition: opacity 0.2s, transform 0.2s;
+    }
+
+    /* 'open' state (X icon) */
+    .menu-toggle.open {
+        font-size: 28px;
+        line-height: 1;
+        padding: 4px 8px;
+    }
+    .menu-toggle.open .menu-icon { display: none; }
+    .menu-toggle:not(.open) .close-icon { display: none; }
+    .menu-toggle.open .close-icon { display: block; }
+
+    /* Dropdown Menu Styling */
+    .dropdown-menu{
+      position:absolute;
+      top:68px; /* Adjusted based on navbar padding/height */
+      right:20px;
+      left:auto; 
+      width:220px; 
+      background:var(--professional-menu-bg); 
+      color:#fff;
+      border-radius:10px;
+      padding:10px 0;
+      box-shadow:0 4px 8px rgba(0,0,0,0.3); 
+      transform-origin:top right; 
+      overflow:hidden;
+      height:auto; 
+      opacity:0;
+      transform:translateY(-5px); 
+      pointer-events: none; 
+      transition: opacity .2s ease, transform .2s ease;
+      z-index:1550;
+    }
+    .dropdown-menu.open{
+      opacity:1;
+      transform:translateY(0);
+      pointer-events: all;
+    }
+    .dropdown-menu a{
+      display:block;
+      padding:12px 18px;
+      font-weight:700;
+      font-size:16px; 
+      color:#fff;
+      transition: background 0.1s;
+    }
+    .dropdown-menu a:hover{
+      background:rgba(255,255,255,0.1); 
+    }
+    .dropdown-menu a.active{
+        color: #ffd700;
+    }
+
+    /* Responsive adjustments */
     @media (max-width:768px){
-      .navbar .nav-links {
-        display:none;
-        flex-direction:column;
-        position:absolute;
-        right:12px;
-        top:62px;
-        background:#1f7a1f;
-        padding:12px;
-        border-radius:10px;
-        min-width:160px;
-        box-shadow:0 12px 30px rgba(0,0,0,0.2);
-        text-align:right;
-      }
-      .navbar .nav-links.show { display:flex !important; }
-      .menu-toggle { display:flex; }
+      .navbar .nav-links { display: none; } /* Hide desktop links */
+      .menu-toggle { display: flex; align-items: center; } /* Show toggle button */
+    }
+    @media (min-width:769px){
+      .dropdown-menu{display:none !important} /* Hide mobile menu on desktop */
+      .menu-toggle{display:none} /* Hide mobile toggle on desktop */
     }
 
     /* About section */
@@ -111,7 +206,7 @@
 
     /* Footer */
     footer {
-      background:#228b22;
+      background:var(--brand);
       color:#fff;
       text-align:center;
       padding:15px;
@@ -121,7 +216,6 @@
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="logo">
@@ -129,7 +223,7 @@
         <span>Trueverse Oil</span>
       </div>
 
-      <ul class="nav-links" id="navMenu">
+      <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="product.html">Products</a></li>
         <li><a href="about.html" class="active">About</a></li>
@@ -137,15 +231,25 @@
         <li><a href="cart.html" class="cart-link">Cart 🛒 (<span id="cart-count">0</span>)</a></li>
       </ul>
 
-      <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-label="Open menu">
-        <span></span>
-        <span></span>
-        <span></span>
+      <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-label="Toggle menu" aria-controls="mobileMenu" type="button">
+        <span class="menu-icon" aria-hidden="true">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </span>
+        <span class="close-icon" aria-hidden="true">X</span>
       </button>
+
+      <div id="mobileMenu" class="dropdown-menu" role="menu" aria-hidden="true">
+        <a role="menuitem" href="index.html">Home</a>
+        <a role="menuitem" href="product.html">Products</a>
+        <a role="menuitem" href="about.html" class="active">About</a>
+        <a role="menuitem" href="contact.html">Contact</a>
+        <a role="menuitem" href="cart.html">Cart 🛒 (<span id="cart-count-mobile">0</span>)</a> 
+      </div>
     </nav>
   </header>
 
-  <!-- About Section -->
   <section class="about">
     <h2>About Trueverse Oil</h2>
     <p>
@@ -183,29 +287,77 @@
     </p>
   </section>
 
-  <!-- Footer -->
   <footer>
     <p>© 2025 Trueverse Oil | All Rights Reserved</p>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    (function () {
       const menuBtn = document.getElementById('menuBtn');
-      const navMenu = document.getElementById('navMenu');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const cartCountMain = document.getElementById('cart-count');
+      const cartCountMobile = document.getElementById('cart-count-mobile');
+      const STORAGE_KEY = "cart";
+      
+      /* --- Helper Functions --- */
+      function getCart() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        try { return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+      }
+      function updateCartCountDisplay(cart) {
+        const count = cart.reduce((total, item) => total + (Number(item.quantity) || 0), 0);
+        if (cartCountMain) cartCountMain.textContent = count;
+        if (cartCountMobile) cartCountMobile.textContent = count;
+      }
+      /* ------------------------ */
 
-      if (!menuBtn || !navMenu) return;
+      // Menu logic (updated for smooth professional toggle)
+      function openMenu() {
+        mobileMenu.classList.add('open');
+        menuBtn.classList.add('open');
+        menuBtn.setAttribute('aria-expanded', 'true');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+      }
+      function closeMenu() {
+        mobileMenu.classList.remove('open');
+        menuBtn.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        menuBtn.focus();
+      }
+      function toggleMenu() {
+        if (mobileMenu.classList.contains('open')) closeMenu(); else openMenu();
+      }
 
-      menuBtn.addEventListener('click', function(e){
-        e.stopPropagation();
-        navMenu.classList.toggle('show');
-      });
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          toggleMenu();
+        });
+        document.addEventListener('click', function (e) {
+          if (!mobileMenu.contains(e.target) && !menuBtn.contains(e.target) && mobileMenu.classList.contains('open')) {
+            closeMenu();
+          }
+        });
+        mobileMenu.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            closeMenu();
+          }
+        });
+      }
 
-      document.addEventListener('click', function(e){
-        if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)){
-          navMenu.classList.remove('show');
+      // Cart count initialization
+      (function initCart(){
+        updateCartCountDisplay(getCart());
+      })();
+
+      // Keep counts synced if changed in another tab
+      window.addEventListener('storage', function (e) {
+        if (e.key === STORAGE_KEY) {
+          updateCartCountDisplay(getCart());
         }
       });
-    });
+    })();
   </script>
 </body>
 </html>
