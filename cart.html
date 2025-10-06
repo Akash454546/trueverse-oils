@@ -17,7 +17,7 @@
       --light-bg: #f7fdf7;
       --card-bg: #fff;
       --primary-text: #1f5d1f;
-      --subtle-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      --subtle-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Lighter shadow */
       --professional-menu-bg: #141922; /* Professional Dark Navy for Menu */
     }
     
@@ -31,7 +31,7 @@
 
 
     /* ---------------------------------
-       NAVBAR
+       NAVBAR & MENU (Retained for consistency)
        --------------------------------- */
     .navbar {
       display: flex;
@@ -77,94 +77,23 @@
       color: #ffd700;
       border-bottom: 2px solid #ffd700;
     }
-    
-    /* ---------------------------------
-       PROFESSIONAL MOBILE MENU STYLES
-       --------------------------------- */
-    .menu-toggle{
-      display:none; 
-      background:transparent;
-      border:0;
-      cursor:pointer;
-      padding:8px;
-      border-radius:8px;
-      z-index: 1700;
-      font-size: 24px;
-      font-weight: 900;
-      color: #fff;
-    }
-
-    /* Hamburger Icon */
-    .menu-toggle .menu-icon {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 20px;
-        width: 26px;
-        transition: transform 0.2s ease-in-out;
-    }
-    .menu-toggle .menu-icon .bar {
-        display: block;
-        width: 100%;
-        height: 3px;
-        background: #fff;
-        border-radius: 2px;
-        transition: opacity 0.2s, transform 0.2s;
-    }
-
-    /* 'open' state (X icon) */
-    .menu-toggle.open {
-        font-size: 28px;
-        line-height: 1;
-        padding: 4px 8px;
-    }
+    .menu-toggle{ display:none; background:transparent; border:0; cursor:pointer; padding:8px; border-radius:8px; z-index: 1700; font-size: 24px; font-weight: 900; color: #fff; }
+    .menu-toggle .menu-icon { display: flex; flex-direction: column; justify-content: space-between; height: 20px; width: 26px; transition: transform 0.2s ease-in-out; }
+    .menu-toggle .menu-icon .bar { display: block; width: 100%; height: 3px; background: #fff; border-radius: 2px; transition: opacity 0.2s, transform 0.2s; }
+    .menu-toggle.open { font-size: 28px; line-height: 1; padding: 4px 8px; }
     .menu-toggle.open .menu-icon { display: none; }
     .menu-toggle:not(.open) .close-icon { display: none; }
     .menu-toggle.open .close-icon { display: block; }
-
-    /* Dropdown Menu Styling */
-    .dropdown-menu{
-      position:absolute;
-      top:68px; 
-      right:20px;
-      left:auto; 
-      width:220px; 
-      background:var(--professional-menu-bg); 
-      color:#fff;
-      border-radius:10px;
-      padding:10px 0;
-      box-shadow:0 4px 8px rgba(0,0,0,0.3); 
-      transform-origin:top right; 
-      overflow:hidden;
-      height:auto; 
-      opacity:0;
-      transform:translateY(-5px); 
-      pointer-events: none; 
-      transition: opacity .2s ease, transform .2s ease;
-      z-index:1550;
-    }
-    .dropdown-menu.open{
-      opacity:1;
-      transform:translateY(0);
-      pointer-events: all;
-    }
-    .dropdown-menu a{
-      display:block;
-      padding:12px 18px;
-      font-weight:700;
-      font-size:16px; 
-      color:#fff;
-      transition: background 0.1s;
-    }
-    .dropdown-menu a:hover{
-      background:rgba(255,255,255,0.1); 
-    }
-    .dropdown-menu a.active{
-        color: #ffd700;
-    }
+    .dropdown-menu{ position:absolute; top:68px; right:20px; left:auto; width:220px; background:var(--professional-menu-bg); color:#fff; border-radius:10px; padding:10px 0; box-shadow:0 4px 8px rgba(0,0,0,0.3); transform-origin:top right; overflow:hidden; height:auto; opacity:0; transform:translateY(-5px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index:1550; }
+    .dropdown-menu.open{ opacity:1; transform:translateY(0); pointer-events: all; }
+    .dropdown-menu a{ display:block; padding:12px 18px; font-weight:700; font-size:16px; color:#fff; transition: background 0.1s; }
+    .dropdown-menu a:hover{ background:rgba(255,255,255,0.1); }
+    .dropdown-menu a.active{ color: #ffd700; }
 
 
-    /* CART SECTION IMPROVEMENTS */
+    /* ---------------------------------
+       CART SECTION - BASE
+       --------------------------------- */
     .cart-section {
       max-width: 1200px;
       margin: 40px auto;
@@ -184,16 +113,23 @@
       flex-wrap: wrap;
       gap: 30px;
     }
+    /* ADDED FIX: Wrapper is needed to conditionally hide table on mobile */
+    .cart-table-wrapper {
+        border-radius: 12px;
+        box-shadow: var(--subtle-shadow);
+    }
     
-    /* Cart Table Styles */
+    /* ---------------------------------
+       CART TABLE (Desktop View)
+       --------------------------------- */
     .cart-table {
       flex: 2;
       min-width: 60%;
       border-collapse: collapse;
       background: var(--card-bg);
-      box-shadow: var(--subtle-shadow);
       border-radius: 12px; 
       overflow: hidden;
+      width: 100%; /* Ensure table takes full width in desktop view */
     }
     .cart-table th {
       background: var(--brand-green); 
@@ -207,26 +143,29 @@
       border-bottom: 1px solid #f0f0f0;
       vertical-align: middle;
     }
-    .cart-table tbody tr:last-child td {
-      border-bottom: none;
-    }
-    .cart-table td:nth-child(3), /* Quantity */
-    .cart-table td:nth-child(4), /* Total */
-    .cart-table th:nth-child(3), 
-    .cart-table th:nth-child(4) {
-      text-align: center;
-    }
-    .cart-table td:nth-child(5) {
-      text-align: right;
-      padding-right: 25px;
-    }
+    .cart-table tbody tr:last-child td { border-bottom: none; }
     
-    .cart-table span {
-      font-weight: 600; 
+    /* Product Image in Table */
+    .product-info-table {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: 600;
+      color: #333;
     }
+    .product-info-table img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid #eee;
+    }
+    .cart-table td:nth-child(3), .cart-table td:nth-child(4), 
+    .cart-table th:nth-child(3), .cart-table th:nth-child(4) { text-align: center; }
+    .cart-table td:nth-child(5) { text-align: right; padding-right: 25px; }
 
     /* Quantity Input Styling */
-    .cart-table input[type="number"] {
+    .qty-input {
       width: 70px;
       padding: 8px;
       border: 1px solid #ccc;
@@ -234,7 +173,7 @@
       text-align: center;
       -moz-appearance: textfield; 
     }
-    .cart-table input[type="number"]:focus {
+    .qty-input:focus {
       border-color: var(--brand-green);
       box-shadow: 0 0 0 2px rgba(34, 139, 34, 0.2);
       outline: none;
@@ -256,11 +195,14 @@
       transform: translateY(-1px);
     }
 
-    /* Cart Summary Styles */
+
+    /* ---------------------------------
+       CART SUMMARY
+       --------------------------------- */
     .cart-summary {
       flex: 1;
       min-width: 300px;
-      background: #fff; 
+      background: var(--card-bg); 
       padding: 25px; 
       border-radius: 12px;
       box-shadow: var(--subtle-shadow);
@@ -289,8 +231,6 @@
       color: #e53935; 
       font-weight: 800;
     }
-    
-    /* Button Styles */
     .cart-summary button {
       display: block;
       width: 100%;
@@ -307,70 +247,106 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .whatsapp-btn {
-      background: #25d366; 
-      color: #fff;
-    }
-    .whatsapp-btn:hover {
-        background: #128c7e;
-    }
-    .continue-btn {
-      background: #f0ad4e;
-      color: #fff;
-    }
-    .continue-btn:hover {
-        background: #ec971f;
-    }
-    .back-btn {
-      background: #228b22;
-      color: #fff;
-    }
-    .back-btn:hover {
-        background: #1e6b1e;
-    }
+    .whatsapp-btn { background: #25d366; color: #fff; }
+    .whatsapp-btn:hover { background: #128c7e; }
+    .continue-btn { background: #f0ad4e; color: #fff; }
+    .continue-btn:hover { background: #ec971f; }
+    .back-btn { background: var(--brand-green); color: #fff; } /* Changed to brand-green */
+    .back-btn:hover { background: #1e6b1e; }
 
-    /* Footer */
-    footer {
-      background: var(--brand-green);
-      color: #fff;
-      text-align: center;
-      padding: 15px;
-      margin-top: 50px;
+    /* ---------------------------------
+       MOBILE CART CARD VIEW (New Styles)
+       --------------------------------- */
+    #cart-cards {
+        display: none; /* Controlled by JS/media query below */
+        width: 100%;
     }
-
-    /* MOBILE RESPONSIVENESS */
-    @media (max-width: 900px) {
-      .cart-container {
+    .cart-item-card {
+        display: flex; /* Displayed only when #cart-cards is shown */
         flex-direction: column;
-      }
-      .cart-table, .cart-summary {
-        min-width: 100%;
-      }
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: var(--subtle-shadow);
+        padding: 15px;
+        margin-bottom: 15px;
+        position: relative;
     }
-    @media (max-width: 500px) {
-        /* Wrapper for horizontal scrolling */
-        .cart-table-wrapper {
-            overflow-x: auto;
-            border-radius: 12px;
-            box-shadow: var(--subtle-shadow);
-        }
-        .cart-table {
-            min-width: 500px; /* Forces table to overflow and scroll */
-            box-shadow: none;
-            border-radius: 0;
-        }
-        .cart-section h2 {
-            font-size: 26px;
-        }
+    .product-info-card {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 15px;
     }
+    .product-info-card img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #eee;
+    }
+    .product-name-card {
+        font-weight: 700;
+        font-size: 18px;
+        color: var(--primary-text);
+    }
+    .price-details-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+        border-top: 1px solid #f0f0f0;
+    }
+    .price-details-card .label {
+        font-weight: 600;
+        color: #555;
+    }
+    .price-details-card .value {
+        font-weight: 800;
+        color: #e53935;
+    }
+    .card-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 1px solid #f0f0f0;
+    }
+    /* Mobile-specific quantity input */
+    .card-actions .qty-input {
+        width: 100px;
+        margin-right: 15px;
+    }
+    /* Make remove button smaller for card view */
+    .card-actions .remove-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+
+    /* ---------------------------------
+       MOBILE RESPONSIVENESS
+       --------------------------------- */
     @media (min-width:769px){
       .dropdown-menu{display:none !important}
       .menu-toggle{display:none}
+      #cart-cards { display: none !important; } /* Ensure cards are hidden on desktop */
     }
     @media (max-width:768px){
       .navbar .nav-links { display: none; }
       .menu-toggle { display: flex; align-items: center; }
+      .cart-container { flex-direction: column; }
+      .cart-table, .cart-summary { min-width: 100%; }
     }
+
+    /* CRITICAL MOBILE VIEW TOGGLE */
+    @media (max-width: 600px) {
+        .cart-section h2 { text-align: center; }
+        /* JS handles display property of wrapper and #cart-cards on resize */
+        /* Hiding header elements that caused the bad look */
+        .cart-table th { display: none; } 
+    }
+
   </style>
 </head>
 <body>
@@ -411,6 +387,7 @@
   <section class="cart-section">
     <h2>Your Shopping Cart</h2>
     <div class="cart-container">
+      
       <div class="cart-table-wrapper">
         <table class="cart-table">
           <thead>
@@ -426,6 +403,9 @@
             </tbody>
         </table>
       </div>
+      
+      <div id="cart-cards">
+        </div>
 
       <div class="cart-summary">
         <h3>Cart Summary</h3>
@@ -445,76 +425,5 @@
     <p>© 2025 Trueverse Oil | All Rights Reserved</p>
   </footer>
 
-  <script>
-    (function () {
-      const menuBtn = document.getElementById('menuBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
-      const cartCountMain = document.getElementById('cart-count');
-      const cartCountMobile = document.getElementById('cart-count-mobile');
-      const STORAGE_KEY = "cart";
-      
-      /* --- Helper Functions --- */
-      function getCart() {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        try { return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
-      }
-      function updateCartCountDisplay(cart) {
-        const count = cart.reduce((total, item) => total + (Number(item.quantity) || 0), 0);
-        if (cartCountMain) cartCountMain.textContent = count;
-        if (cartCountMobile) cartCountMobile.textContent = count;
-      }
-      /* ------------------------ */
-
-      // Menu logic (updated for smooth professional toggle)
-      function openMenu() {
-        mobileMenu.classList.add('open');
-        menuBtn.classList.add('open');
-        menuBtn.setAttribute('aria-expanded', 'true');
-        mobileMenu.setAttribute('aria-hidden', 'false');
-      }
-      function closeMenu() {
-        mobileMenu.classList.remove('open');
-        menuBtn.classList.remove('open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-        menuBtn.focus();
-      }
-      function toggleMenu() {
-        if (mobileMenu.classList.contains('open')) closeMenu(); else openMenu();
-      }
-
-      if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          toggleMenu();
-        });
-        document.addEventListener('click', function (e) {
-          if (!mobileMenu.contains(e.target) && !menuBtn.contains(e.target) && mobileMenu.classList.contains('open')) {
-            closeMenu();
-          }
-        });
-        mobileMenu.addEventListener('click', function (e) {
-          if (e.target.tagName === 'A') {
-            closeMenu();
-          }
-        });
-      }
-
-      // Cart count initialization
-      (function initCart(){
-        updateCartCountDisplay(getCart());
-      })();
-
-      // Keep counts synced if changed in another tab
-      window.addEventListener('storage', function (e) {
-        if (e.key === STORAGE_KEY) {
-          updateCartCountDisplay(getCart());
-        }
-      });
-    })();
-    
-    // NOTE: The core Cart functionality (displayCart, removeFromCart, updateQuantity, orderInWhatsApp) 
-    // is expected to be in your linked 'cart.js' file.
-  </script>
-</body>
+  </body>
 </html>
