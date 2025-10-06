@@ -17,8 +17,8 @@
       --light-bg: #f7fdf7;
       --card-bg: #fff;
       --primary-text: #1f5d1f;
-      --subtle-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Lighter shadow */
-      --professional-menu-bg: #141922; /* Professional Dark Navy for Menu */
+      --subtle-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
+      --professional-menu-bg: #141922; 
     }
     
     /* Reset & base */
@@ -31,7 +31,7 @@
 
 
     /* ---------------------------------
-       NAVBAR & MENU (Retained for consistency)
+       NAVBAR & MENU
        --------------------------------- */
     .navbar {
       display: flex;
@@ -128,7 +128,7 @@
       background: var(--card-bg);
       border-radius: 12px; 
       overflow: hidden;
-      width: 100%; /* Ensure table takes full width in desktop view */
+      width: 100%; 
     }
     .cart-table th {
       background: var(--brand-green); 
@@ -163,12 +163,42 @@
     .cart-table th:nth-child(3), .cart-table th:nth-child(4) { text-align: center; }
     .cart-table td:nth-child(5) { text-align: right; padding-right: 25px; }
 
-    /* Quantity Input Styling */
+    /* Quantity Control Styling for Plus/Minus Buttons */
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center; 
+      gap: 0; 
+    }
+    .qty-btn {
+      background: var(--brand-green);
+      color: white;
+      border: 1px solid var(--brand-green);
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      width: 40px; 
+      transition: background 0.2s;
+    }
+    .qty-btn:hover {
+      background: #1e6b1e;
+    }
+    .minus-btn {
+      border-right: none;
+      border-radius: 4px 0 0 4px;
+    }
+    .plus-btn {
+      border-left: none;
+      border-radius: 0 4px 4px 0;
+    }
     .qty-input {
-      width: 70px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      width: 50px; 
+      padding: 8px 0;
+      border: 1px solid #ccc; 
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
       text-align: center;
       -moz-appearance: textfield; 
     }
@@ -177,6 +207,7 @@
       box-shadow: 0 0 0 2px rgba(34, 139, 34, 0.2);
       outline: none;
     }
+
 
     /* Remove Button Styling */
     .remove-btn {
@@ -196,7 +227,7 @@
 
 
     /* ---------------------------------
-       CART SUMMARY
+       CART SUMMARY (With New Input Styles)
        --------------------------------- */
     .cart-summary {
       flex: 1;
@@ -230,6 +261,31 @@
       color: #e53935; 
       font-weight: 800;
     }
+    
+    /* Customer Details Form Styles */
+    .customer-details input,
+    .customer-details textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+        box-sizing: border-box; 
+    }
+    .customer-details input:focus,
+    .customer-details textarea:focus {
+        border-color: var(--brand-green);
+        box-shadow: 0 0 0 2px rgba(34, 139, 34, 0.2);
+        outline: none;
+    }
+    .customer-details textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+    /* End Customer Details Form Styles */
+
+
     .cart-summary button {
       display: block;
       width: 100%;
@@ -254,14 +310,14 @@
     .back-btn:hover { background: #1e6b1e; }
 
     /* ---------------------------------
-       MOBILE CART CARD VIEW (New Styles)
+       MOBILE CART CARD VIEW 
        --------------------------------- */
     #cart-cards {
-        display: none; /* Controlled by JS/media query below */
+        display: none; 
         width: 100%;
     }
     .cart-item-card {
-        display: flex; /* Displayed only when #cart-cards is shown */
+        display: flex; 
         flex-direction: column;
         background: var(--card-bg);
         border-radius: 12px;
@@ -311,12 +367,10 @@
         padding-top: 10px;
         border-top: 1px solid #f0f0f0;
     }
-    /* Mobile-specific quantity input */
-    .card-actions .qty-input {
-        width: 100px;
-        margin-right: 15px;
+    .card-actions .qty-controls {
+        justify-content: flex-start;
+        gap: 0;
     }
-    /* Make remove button smaller for card view */
     .card-actions .remove-btn {
         padding: 10px 15px;
         font-size: 14px;
@@ -329,7 +383,7 @@
     @media (min-width:769px){
       .dropdown-menu{display:none !important}
       .menu-toggle{display:none}
-      #cart-cards { display: none !important; } /* Ensure cards are hidden on desktop */
+      #cart-cards { display: none !important; } 
     }
     @media (max-width:768px){
       .navbar .nav-links { display: none; }
@@ -341,7 +395,6 @@
     /* CRITICAL MOBILE VIEW TOGGLE */
     @media (max-width: 600px) {
         .cart-section h2 { text-align: center; }
-        /* Hiding header elements that caused the bad look (table headers) */
         .cart-table th { display: none; } 
     }
 
@@ -412,6 +465,12 @@
         <hr style="margin: 15px 0; border: 0; border-top: 1px dashed #ddd;">
         <p><strong>Order Total: <span id="total">₹0</span></strong></p>
 
+        <div class="customer-details">
+            <h4 style="color: var(--primary-text); margin-bottom: 10px; margin-top: 20px;">Your Details</h4>
+            <input type="text" id="customer-name" placeholder="Full Name" required>
+            <input type="tel" id="customer-phone" placeholder="Contact Phone Number" required>
+            <textarea id="customer-address" placeholder="Full Shipping Address (House No, Street, City, Pincode)" required></textarea>
+        </div>
         <button class="whatsapp-btn" onclick="orderInWhatsApp()">Order in WhatsApp</button>
         <button class="continue-btn" onclick="window.location.href='product.html'">Continue Shopping</button>
         <button class="back-btn" onclick="window.location.href='index.html'">Back to Home</button>
@@ -423,5 +482,5 @@
     <p>© 2025 Trueverse Oil | All Rights Reserved</p>
   </footer>
 
-  </body>
+</body>
 </html>

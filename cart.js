@@ -1,12 +1,12 @@
 /* ===========================
-   cart.js — Trueverse Oil (Definitive Final Version)
+   cart.js — Trueverse Oil (Final Version with Plus/Minus Qty Buttons & Checkout Form)
    =========================== */
 
 /* ---- CONFIG ---- */
 var STORAGE_KEY = "cart";
 var STORE_NAME = "Trueverse Oil";
 var WHATSAPP_PHONE = "919092418710";
-var MOBILE_BREAKPOINT = 600; // Screen width (in pixels) to switch to card view
+var MOBILE_BREAKPOINT = 600; 
 
 /* ---- HELPERS ---- */
 function getCart() {
@@ -32,6 +32,23 @@ function formatINR(amount) {
    GLOBAL CART MANAGEMENT FUNCTIONS
    =========================== */
 
+// Handles button clicks (+/-)
+function changeQuantity(index, delta) {
+    var cart = getCart();
+    index = parseInt(index, 10); 
+    if (isNaN(index) || !cart[index]) return;
+
+    var currentQty = Number(cart[index].quantity) || 1;
+    var newQty = currentQty + delta;
+
+    if (newQty < 1) newQty = 1;
+
+    cart[index].quantity = newQty;
+    setCart(cart);
+    renderCart(); // Re-render to update totals and display
+}
+
+// Handles manual input change
 function updateQuantity(index, quantity) {
   var cart = getCart();
   index = parseInt(index, 10); 
@@ -58,30 +75,55 @@ function removeItem(index) {
   renderCart();
 }
 
+// Function to collect details and send order via WhatsApp (UPDATED)
 function orderInWhatsApp() {
-  var cart = getCart();
-  if (!cart.length) {
-    alert("Your cart is empty! Add products before ordering.");
-    return;
-  }
-  
-  var subtotal = cart.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0);
-  var lines = cart.map((it, i) => {
-    var price = Number(it.price) || 0;
-    var qty = Number(it.quantity) || 0;
-    var line = price * qty;
-    return (i + 1) + ". " + it.name + " — " + formatINR(price) + " x " + qty + " = " + formatINR(line);
-  });
+    var cart = getCart();
+    if (!cart.length) {
+        alert("Your cart is empty! Add products before ordering.");
+        return;
+    }
+    
+    // 1. Get Customer Input from form fields
+    var name = document.getElementById('customer-name').value.trim();
+    var phone = document.getElementById('customer-phone').value.trim();
+    var address = document.getElementById('customer-address').value.trim();
 
-  var msg = "🛒 New Order - " + STORE_NAME + "\n\n";
-  msg += lines.join("\n");
-  msg += "\n\nTotal: " + formatINR(subtotal) + "\n";
-  msg += "Shipping: Free\n";
-  msg += "\nPlease confirm the order and provide your full shipping address and contact number.";
-  
-  var url = "https://wa.me/" + WHATSAPP_PHONE + "?text=" + encodeURIComponent(msg);
-  window.open(url, "_blank");
+    // 2. Validate Input
+    if (!name || !phone || !address) {
+        alert("Please fill in your Full Name, Contact Phone Number, and Shipping Address in the form above to proceed with the order.");
+        return;
+    }
+    
+    // 3. Calculate Cart Details
+    var subtotal = cart.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0);
+    var lines = cart.map((it, i) => {
+        var price = Number(it.price) || 0;
+        var qty = Number(it.quantity) || 0;
+        var line = price * qty;
+        return (i + 1) + ". " + it.name + " — " + formatINR(price) + " x " + qty + " = " + formatINR(line);
+    });
+
+    // 4. Construct WhatsApp Message
+    var msg = "🛒 NEW ORDER - " + STORE_NAME + "\n\n";
+    
+    msg += "--- Customer Details ---\n";
+    msg += "Name: " + name + "\n";
+    msg += "Phone: " + phone + "\n";
+    msg += "Address: " + address + "\n\n";
+    
+    msg += "--- Order Summary ---\n";
+    msg += lines.join("\n");
+    msg += "\n\nSubtotal: " + formatINR(subtotal) + "\n";
+    msg += "Shipping: Free\n";
+    msg += "Total: " + formatINR(subtotal) + "\n\n";
+    
+    msg += "Please confirm availability and dispatch details. Thank you!";
+    
+    // 5. Open WhatsApp
+    var url = "https://wa.me/" + WHATSAPP_PHONE + "?text=" + encodeURIComponent(msg);
+    window.open(url, "_blank");
 }
+
 
 /* ===========================
    CART DISPLAY RENDERERS
@@ -124,7 +166,11 @@ function renderTable(cart, cartItemsEl, subtotalEl, totalEl) {
             '  </td>' +
             '  <td>' + formatINR(price) + '</td>' +
             '  <td style="text-align: center;">' +
-            '    <input type="number" class="qty-input" min="1" value="' + qty + '" onchange="updateQuantity(' + i + ', this.value)">' +
+            '    <div class="qty-controls">' +
+            '      <button type="button" class="qty-btn minus-btn" onclick="changeQuantity(' + i + ', -1)">-</button>' +
+            '      <input type="number" class="qty-input" id="qty-input-' + i + '" min="1" value="' + qty + '" onchange="updateQuantity(' + i + ', this.value)">' +
+            '      <button type="button" class="qty-btn plus-btn" onclick="changeQuantity(' + i + ', 1)">+</button>' +
+            '    </div>' +
             '  </td>' +
             '  <td class="item-total" style="text-align: center;">' + formatINR(lineTotal) + '</td>' +
             '  <td style="text-align: right;"><button onclick="removeItem(' + i + ')" class="remove-btn">X</button></td>' +
@@ -169,7 +215,11 @@ function renderCards(cart, cartCardsEl, subtotalEl, totalEl) {
             '    </div>' +
             '    <div class="card-actions">' +
             '        <span class="label">Quantity:</span>' +
-            '        <input type="number" class="qty-input" min="1" value="' + qty + '" onchange="updateQuantity(' + i + ', this.value)">' +
+            '        <div class="qty-controls card-qty-controls">' +
+            '          <button type="button" class="qty-btn minus-btn" onclick="changeQuantity(' + i + ', -1)">-</button>' +
+            '          <input type="number" class="qty-input" id="qty-input-card-' + i + '" min="1" value="' + qty + '" onchange="updateQuantity(' + i + ', this.value)">' +
+            '          <button type="button" class="qty-btn plus-btn" onclick="changeQuantity(' + i + ', 1)">+</button>' +
+            '        </div>' +
             '        <button class="remove-btn" onclick="removeItem(' + i + ')">Remove</button>' +
             '    </div>' +
             '</div>';
@@ -195,15 +245,11 @@ function renderCart() {
     return;
   }
 
-  // Determine view based on screen width
   var isMobileView = window.innerWidth <= MOBILE_BREAKPOINT;
 
-  // 1. Toggle containers (Fixes the "bad looking" issue's visibility)
   if (cartTableWrapper) cartTableWrapper.style.display = isMobileView ? 'none' : 'block';
   if (cartCardsEl) cartCardsEl.style.display = isMobileView ? 'block' : 'none';
 
-
-  // 2. Render content
   if (cartItemsEl && !isMobileView) {
       renderTable(cart, cartItemsEl, subtotalEl, totalEl);
       if (cartCardsEl) cartCardsEl.innerHTML = "";
@@ -211,7 +257,6 @@ function renderCart() {
       renderCards(cart, cartCardsEl, subtotalEl, totalEl);
       if (cartItemsEl) cartItemsEl.innerHTML = "";
   } else {
-      // Fallback update
       var subtotal = cart.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0);
       subtotalEl.textContent = formatINR(subtotal);
       totalEl.textContent = formatINR(subtotal);
@@ -222,7 +267,7 @@ function renderCart() {
 
 
 /* ===========================
-   MENU LOGIC (Moved from HTML to JS)
+   MENU LOGIC
    =========================== */
 
 function setupMenu() {
@@ -270,14 +315,11 @@ function setupMenu() {
    =========================== */
 
 document.addEventListener('DOMContentLoaded', function() {
-    setupMenu(); // Initialize menu toggle
+    setupMenu();
     renderCart();
-    
-    // This ensures layout switches when rotating a phone or resizing
     window.addEventListener('resize', renderCart); 
 }); 
 
-// Listen for storage changes from other tabs/windows
 window.addEventListener('storage', function (e) {
     if (e.key === STORAGE_KEY) {
         renderCart();
