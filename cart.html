@@ -113,7 +113,6 @@
       flex-wrap: wrap;
       gap: 30px;
     }
-    /* ADDED FIX: Wrapper is needed to conditionally hide table on mobile */
     .cart-table-wrapper {
         border-radius: 12px;
         box-shadow: var(--subtle-shadow);
@@ -251,7 +250,7 @@
     .whatsapp-btn:hover { background: #128c7e; }
     .continue-btn { background: #f0ad4e; color: #fff; }
     .continue-btn:hover { background: #ec971f; }
-    .back-btn { background: var(--brand-green); color: #fff; } /* Changed to brand-green */
+    .back-btn { background: var(--brand-green); color: #fff; }
     .back-btn:hover { background: #1e6b1e; }
 
     /* ---------------------------------
@@ -342,8 +341,7 @@
     /* CRITICAL MOBILE VIEW TOGGLE */
     @media (max-width: 600px) {
         .cart-section h2 { text-align: center; }
-        /* JS handles display property of wrapper and #cart-cards on resize */
-        /* Hiding header elements that caused the bad look */
+        /* Hiding header elements that caused the bad look (table headers) */
         .cart-table th { display: none; } 
     }
 
